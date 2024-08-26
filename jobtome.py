@@ -16,14 +16,7 @@ browser = "Mozilla%2F5.0+%28Windows+NT+6.1%3B+WOW64%29+AppleWebKit%2F537.36+%28K
 channel = ""
 
 categories = [
-    "Accounting", "Admin", "Advertising", "Architecture", "Automotive", "Aviation",
-    "Banking", "Call Centre", "Charity", "Childcare", "Civil Engineering", "Cleaning",
-    "Construction", "Creative", "Customer Service", "Dental", "Design", "Driving",
-    "Education", "Electrical Engineering", "Engineering", "Environmental", "Finance",
-    "Healthcare", "Hospitality", "HR", "Legal", "Leisure", "Logistics", "Management",
-    "Manufacturing", "Marketing", "Nursing", "Oil And Gas", "Pharmacy", "PR",
-    "Procurement", "Public Sector", "Real Estate", "Recruitment", "Renewable Energy",
-    "Retail", "Sales", "Science", "Social Work", "Sports", "Teaching", "Therapy",
+"Sales", "Science", "Social Work", "Sports", "Teaching", "Therapy",
     "Tourism", "Training", "Transport", "Travel", "Veterinary", "Warehouse"
 ]
 

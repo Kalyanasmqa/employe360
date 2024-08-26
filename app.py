@@ -59,7 +59,7 @@ def fetch_jobs(db_name, collection_name, query=None, location=None, page=1, per_
 
     return jobs, collection.count_documents(mongo_query)
 
-def fetch_adzuna_jobs(query=None, location=None, page=1, per_page=1):
+def fetch_adzuna_jobs(query=None, location=None, page=1, per_page=4):
     combined_jobs = []
     total_jobs_count = 0
 
