@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <style>
+       #pagination-controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#pagination-controls a,
+#pagination-controls span {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#pagination-controls a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#pagination-controls .current-page {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+#pagination-controls span {
+    font-size: 14px;
+    color: #555;
+}
+
+#pagination-controls .disabled {
+    color: #ccc;
+    border-color: #ccc;
+    pointer-events: none;
+}
+
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+ <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+ <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+ <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='/footer/fonts/icomoon/style.css') }}"> 
+ <link rel="stylesheet" href="static\footer\fonts\icomoon\style.css">
+
+
+ <!-- Bootstrap CSS -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='/footer/css/bootstrap.min.css') }}"> 
+ <link rel="stylesheet" href="{{ url_for('static', filename='/footer/css/style.css') }}"> 
+
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+ 
+ <!-- Style CSS -->
+ <link rel="stylesheet" href="css/style.css">
+       <!-- CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/summernote.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/swiper-bundle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+</head>
+
+<div id="loader" class="loader" style="display:none;">
+    <div class="spinner"></div>
+</div>
+<body>    
+    
+<!-- Assuming this code is saved as a template file like "index.html" in your Flask project -->
+
+<header class="header-area style-5">
+    <div class="menu-area">
+        <div class="header-logo">
+            <a href="{{ url_for('index') }}"><img alt="Company Logo" class="img-fluid" src="{{ url_for('static', filename='assets/images/bg/company-logo/company-logo.png') }}"></a>
+        </div>
+        <div class="main-menu">
+            <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
+                <div class="mobile-logo-wrap">
+                    <a href="{{ url_for('index') }}"><img alt="Company Logo" src="{{ url_for('static', filename='assets/images/bg/company-logo/company-logo.png') }}"></a>
+                </div>
+                <div class="menu-close-btn">
+                    <i class="bi bi-x-lg"></i>
+                </div>
+            </div>
+            <ul class="menu-list">
+                <li><a href="https://employe360.com/">Home</a></li>
+                <li><a href="https://employe360.com/contact.html">Contact Us</a></li>
+                <li><a href="https://employe360.com/about.html">About Us</a></li>
+
+            </ul>
+            <div class="for-mobile-menu d-lg-none d-block">
+                <div class="social-area">
+                    <ul>
+                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/"><i class='bx bxl-twitter'></i></a></li>
+                        <li><a href="https://www.linkedin.com/"><i class='bx bxl-linkedin'></i></a></li>
+                        <li><a href="https://www.instagram.com/"><i class='bx bxl-instagram'></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right d-flex justify-content-end align-items-center">
+           
+            <div class="sidebar-button mobile-menu-btn">
+                <i class="bi bi-list"></i>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ========== header end============= -->
+
+
+<div class="hero2">
+    <div class="hero-wapper">
+        <div class="container-fluid px-0">
+            <div class="row">
+                <div class="col-lg-7 d-flex align-items-center">
+                    <div class="hero-content">
+                       
+                        <div class="job-search-area">
+                            <form method="GET" action="/">
+                                <div class="form-inner job-title">
+                                    <input type="text" id="query" name="query" placeholder="What jobs are you looking for?" value="{{ query }}">
+                                </div>
+                                <div class="form-inner category">
+                                    <input type="text" id="location" name="location" placeholder="Enter location" value="{{ location }}">
+                                </div>
+                                <div class="form-inner">
+                                    <button type="submit" class="primry-btn-2 ">
+                                        <img src="{{ url_for('static', filename='assets/images/icon/search-icon.svg') }}" alt=""> Search
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="suggest-tag">
+                            <h6><i class="bi bi-bookmark-fill"></i>Suggested Tag:</h6>
+                            <ul>
+                                <li><a href="https://backup.employe360.com/?query=Engineering&location=">Engineering,</a></li>
+                                <li><a href="https://backup.employe360.com/?query=marketing&location=">Marketing,</a></li>
+                                <li><a href="https://backup.employe360.com/?query=ui&location=">UI/UX Design,</a></li>
+                                <li><a href="https://backup.employe360.com/?query=data&location=">Data Analyst,</a></li>
+                                <li><a href="https://backup.employe360.com/?query=Programming&location=">Programming</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Inside your title section -->
+
+<!-- joblookup Job Listings -->
+<div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if joblookup_jobs %}
+                {% for job in joblookup_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7P4QyYX6GW1-W9ev8wWhmhqgC_3HQcGDzFQ&s" alt="Careerjet Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('url') }}" target="_blank">
+                                                {{ job.get('title') }}
+                                            </a>
+                                        </h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#">{{ job.get('company', 'N/A') }}</a>
+                                            </li>
+                                            <li class="verified">
+                                                <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('location', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salary', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Posted:</span> {{ job.get('age', 'N/A') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+  <!-- Adzuna Job Listings -->
+<div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+                <div class="section-title1">
+                </div>
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if adzuna_jobs %}
+                {% for job in adzuna_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ16pJ3lJOjHlRrdtHS7NnYZq_FrZd_IOVYbw&s" alt="Company Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('redirect_url') }}" target="_blank">
+                                                {{ job.get('title') }}
+                                            </a>
+                                        </h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#">{{ job.get('company', {}).get('display_name', 'N/A') }}</a>
+                                            </li>
+                                            <li class="verified">
+                                                <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('location', {}).get('display_name', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salary_min', 'N/A') }} - {{ job.get('salary_max', 'N/A') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('redirect_url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+  <!-- CVLibrary Job Listings -->
+  <div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+                <div class="section-title1">
+                </div>
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if cv_library_jobs %}
+                {% for job in cv_library_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <!-- Replace with actual logo path or remove if not available -->
+                                    <img src="https://play-lh.googleusercontent.com/0X7xXgyec6SCaWEmYTSSQGNdDnUFrmUNOBbFPlADqnAJjjkPrlF0Q_qCFExwMY82T8M" alt="Company Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('url') }}" target="_blank">
+                                                {{ job.get('title') }}
+                                            </a>
+                                        </h5>
+                                        <ul>
+                                            <p>{{ job.get('company', 'N/A') }}</p>
+                                            <li class="verified">
+                                                <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('location', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salarymin', 'N/A') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+<!-- WhatJobs Job Listings -->
+<div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+                <div class="section-title1">
+                </div>
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if whatjobs_jobs %}
+                {% for job in whatjobs_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <img src="https://media.licdn.com/dms/image/v2/C4E0BAQFX6wK-gq0gOg/company-logo_200_200/company-logo_200_200/0/1679318189607/whatjobs_logo?e=2147483647&v=beta&t=AVUFO23PN-8XALB05x17SmMJZ7ifKq9IZF7nQVQVNI0" alt="WhatJobs Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('url') }}" target="_blank">{{ job.get('title') }}</a>
+                                        </h5>
+                                        <ul>
+                                            <li><a href="#">{{ job.get('company') }}</a></li>
+                                            <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('location') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salary') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+    
+<!-- Careerjet Job Listings -->
+<div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if careerjet_jobs %}
+                {% for job in careerjet_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <img src="https://marketing-assets.pinpointhq.com/wp-content/uploads/2021/03/careerjet-pinpoint-integration-9fb92ef2231662c94b3c02f875e7ae78.png" alt="Careerjet Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('url') }}" target="_blank">
+                                                {{ job.get('title') }}
+                                            </a>
+                                        </h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#">{{ job.get('company', 'N/A') }}</a>
+                                            </li>
+                                            <li class="verified">
+                                                <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('locations', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salary', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Posted:</span> {{ job.get('date', 'N/A') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- jobtome Job Listings -->
+<div class="home2-featured-area mb-120">
+    <div class="container">
+        <div class="row mb-60">
+            <div class="col-12 d-flex flex-wrap align-items-end justify-content-md-between justify-content-start gap-3">
+            </div>
+        </div>
+        <div class="row gy-5">
+            {% if jobtome_jobs %}
+                {% for job in jobtome_jobs %}
+                    <div class="col-lg-6">
+                        <div class="feature-card2">
+                            <div class="company-area">
+                                <span></span>
+                                <div class="logo">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdNHyXwcX51D7PMjuJ0bsi6fxSBqWaX0mcdQ&s" alt="Careerjet Logo">
+                                </div>
+                                <div class="company-details">
+                                    <div class="name-location">
+                                        <h5>
+                                            <a href="{{ job.get('url') }}" target="_blank">
+                                                {{ job.get('title') }}
+                                            </a>
+                                        </h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#">{{ job.get('company', 'N/A') }}</a>
+                                            </li>
+                                            <li class="verified">
+                                                <img src="{{ url_for('static', filename='images/icon/verified.svg') }}" alt=""> Verified Company
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bookmark">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-discription">
+                                <ul class="one">
+                                    <li>
+                                        <p><span class="title">Location:</span> {{ job.get('country', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Salary: £</span> {{ job.get('salary', 'N/A') }}</p>
+                                    </li>
+                                    <li>
+                                        <p><span class="title">Posted:</span> {{ job.get('posted_date', 'N/A') }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="job-type-apply">
+                                <div class="apply-btn" style="display: inline-block; padding: 10px 20px; border: 2px solid #007bff; border-radius: 5px; background-color: #007bff; color: white; text-align: center; text-decoration: none; font-weight: bold; transition: all 0.3s ease; cursor: pointer;">
+                                    <a href="{{ job.get('url') }}" target="_blank" style="color: white; text-decoration: none; display: flex; align-items: center;">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <style>
+                                .apply-btn:hover {
+                                    background-color: #0056b3;
+                                    border-color: #004085;
+                                    color: #e0e0e0;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Pagination controls -->
+<div id="pagination-controls">
+    {% if page > 1 %}
+        <a href="/?query={{ query }}&location={{ location }}&page={{ page - 1 }}">Previous</a>
+    {% endif %}
+
+    {% if start_page > 1 %}
+        <a href="/?query={{ query }}&location={{ location }}&page=1">1</a>
+        {% if start_page > 2 %}
+            <span>...</span>
+        {% endif %}
+    {% endif %}
+
+    {% for p in range(start_page, end_page + 1) %}
+        {% if p == page %}
+            <span class="current-page">{{ p }}</span>
+        {% else %}
+            <a href="/?query={{ query }}&location={{ location }}&page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <a href="/?query={{ query }}&location={{ location }}&page={{ page + 1 }}">Next</a>
+    {% endif %}
+</div>
+
+
+
+    <!-- ========== Home1 Footer area Start============= -->
+    {% include 'footer.html' %}
+  <!-- ========== Home1 Footer area end============= -->
+<style>.footer-59391 {
+    background-image: url('https://employe360.com/assets/images/bg/home2-banner-bg.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  
+  .footer-59391 .form-control {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  
+  .footer-59391 .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .footer-59391 a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footer-59391 a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-59391 .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer-59391 .nav-links li {
+    margin: 0 10px;
+  }
+  
+  .footer-59391 .social {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer-59391 .social li {
+    margin: 0 10px;
+  }
+  </style>  
+ <script src="js/jquery-3.3.1.min.js"></script>
+ <script src="js/popper.min.js"></script>
+ <script src="js/bootstrap.min.js"></script>
+
+ <script src="{{ url_for('static', filename='footer/js/jquery-3.3.1.min.js') }}"></script>
+ <script src="{{ url_for('static', filename='footer/popper.min.js') }}"></script>
+ <script src="{{ url_for('static', filename='footer/bootstrap.min.js') }}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<!-- Include JavaScript files -->
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/swiper-bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/slick.js') }}"></script>
+<script src="{{ url_for('static', filename='js/summernote.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.nice-select.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.fancybox.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/counterup.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/viewport.jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.nice-number.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('loader').style.display = 'flex';
+        });
+
+        window.addEventListener('load', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
