@@ -1,3 +1,6 @@
+# Fetch XML data prem test file
+
+
 import requests
 import xml.etree.ElementTree as ET
 from pymongo import MongoClient
@@ -7,7 +10,7 @@ MONGO_URI = "mongodb://localhost:27017/"
 DB_NAME = "job_database112233"
 COLLECTION_NAME = "jobs"
 
-# Fetch XML data
+
 XML_URL = "https://www.cv-library.co.uk/cgi-bin/feed.xml?affid=106079"
 
 def fetch_xml_data(url):
